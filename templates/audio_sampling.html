@@ -1,0 +1,227 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Audio Sampling Frequency Analyzer</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'styles/audio_sampling.css' %}" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    {% include 'components/navigator.html' %}
+    <!-- Main Container -->
+    <div class="container">
+      <h2 class="text-center">Audio Sampling Frequency Analyzer</h2>
+
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="error" id="errorBox"></div>
+          <div class="success" id="successBox"></div>
+
+          <div
+            style="
+              background: white;
+              padding: 25px;
+              border-radius: 8px;
+              box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            "
+          >
+            <label
+              for="audioFile"
+              style="
+                font-weight: 600;
+                color: #002b5c;
+                font-size: 16px;
+                margin-bottom: 12px;
+                display: block;
+              "
+              >Upload Audio File (Male/Female Voice)</label
+            >
+            <input type="file" id="audioFile" accept="audio/*" required />
+
+            <div class="button-container">
+              <button onclick="analyzeAudio()" class="btn btn-custom w-100">
+                Analyze Audio
+              </button>
+            </div>
+          </div>
+
+          <div class="loader" id="loader">
+            <div class="spinner"></div>
+          </div>
+
+          <div id="resultsSection" class="hidden">
+            <div class="info-box">
+              <div class="info-item">
+                <span class="info-label">Maximum Frequency (fmax):</span>
+                <span class="value" id="fmax">-</span> Hz
+              </div>
+              <div class="info-item">
+                <span class="info-label"
+                  >Minimum Safe Sampling Frequency (Nyquist):</span
+                >
+                <span class="value" id="nyquist">-</span> Hz
+              </div>
+              <div class="info-item">
+                <span class="info-label">Original Sampling Rate:</span>
+                <span class="value" id="originalSr">-</span> Hz
+              </div>
+            </div>
+
+            <div class="slider-container">
+              <div class="slider-info">
+                <label for="samplingSlider">Adjust Sampling Frequency</label>
+                <div class="slider-value" id="sliderValue">44100 Hz</div>
+              </div>
+              <input
+                type="range"
+                id="samplingSlider"
+                min="4000"
+                max="192000"
+                value="44100"
+                step="100"
+              />
+            </div>
+
+            <div class="audio-player">
+              <label>Resampled Audio Preview</label>
+              <audio id="audioPlayer" controls></audio>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      const audioFileInput = document.getElementById("audioFile");
+      const resultsSection = document.getElementById("resultsSection");
+      const errorBox = document.getElementById("errorBox");
+      const successBox = document.getElementById("successBox");
+      const samplingSlider = document.getElementById("samplingSlider");
+      const sliderValue = document.getElementById("sliderValue");
+      const audioPlayer = document.getElementById("audioPlayer");
+      const loader = document.getElementById("loader");
+
+      let nyquistFreq = 0;
+      let sessionId = null;
+
+      function showError(message) {
+        errorBox.textContent = message;
+        errorBox.classList.add("show");
+        setTimeout(() => errorBox.classList.remove("show"), 5000);
+      }
+
+      function showSuccess(message) {
+        successBox.textContent = message;
+        successBox.classList.add("show");
+        setTimeout(() => successBox.classList.remove("show"), 3000);
+      }
+
+      async function analyzeAudio() {
+        const file = audioFileInput.files[0];
+        if (!file) {
+          showError("Please select an audio file");
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append("audio", file);
+
+        loader.style.display = "block";
+        errorBox.classList.remove("show");
+
+        try {
+          const response = await fetch("/analyze/", {
+            method: "POST",
+            body: formData,
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            nyquistFreq = data.nyquist_freq;
+            sessionId = data.session_id;
+
+            document.getElementById("fmax").textContent = data.fmax;
+            document.getElementById("nyquist").textContent = data.nyquist_freq;
+            document.getElementById("originalSr").textContent =
+              data.original_sr;
+
+            samplingSlider.min = 1;
+            samplingSlider.max = data.original_sr * 2;
+            samplingSlider.value = data.original_sr;
+
+            resultsSection.classList.remove("hidden");
+            showSuccess("Audio analyzed successfully!");
+            updateSliderDisplay();
+            resampleAudio();
+          } else {
+            showError("Error: " + data.error);
+          }
+        } catch (error) {
+          showError("Error analyzing audio: " + error.message);
+        } finally {
+          loader.style.display = "none";
+        }
+      }
+
+      function updateSliderDisplay() {
+        const currentValue = parseInt(samplingSlider.value);
+        sliderValue.textContent = currentValue + " Hz";
+
+        if (currentValue < nyquistFreq) {
+          sliderValue.classList.add("warning");
+          samplingSlider.classList.add("warning");
+          sliderValue.textContent += " ⚠️ Below Nyquist";
+        } else {
+          sliderValue.classList.remove("warning");
+          samplingSlider.classList.remove("warning");
+        }
+      }
+
+      async function resampleAudio() {
+        if (!sessionId) return;
+
+        const samplingRate = parseInt(samplingSlider.value);
+
+        const formData = new FormData();
+        formData.append("session_id", sessionId);
+        formData.append("sampling_rate", samplingRate);
+
+        try {
+          const response = await fetch("/resample/", {
+            method: "POST",
+            body: formData,
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            audioPlayer.src = data.audio_data;
+            console.log("Audio loaded:", data.audio_data.substring(0, 50));
+          } else {
+            showError("Error resampling: " + data.error);
+            console.error("Resample error:", data);
+          }
+        } catch (error) {
+          showError("Error: " + error.message);
+        }
+      }
+
+      samplingSlider.addEventListener("input", () => {
+        updateSliderDisplay();
+        resampleAudio();
+      });
+    </script>
+  </body>
+</html>

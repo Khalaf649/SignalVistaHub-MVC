@@ -1,0 +1,200 @@
+/* Dynamic Navbar */
+.navbar-custom {
+  height: 100px;
+  background: linear-gradient(90deg, #002b5c, #004080, #002b5c);
+  background-size: 200% auto;
+  animation: navbarGradient 6s linear infinite;
+  transition: all 0.3s ease;
+}
+
+@keyframes navbarGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.navbar-custom .navbar-brand,
+.navbar-custom .nav-link {
+  color: white !important;
+  font-weight: 500;
+  font-size: 25px;
+  transition: color 0.3s ease;
+}
+
+.navbar-custom .nav-link:hover {
+  color: #66b2ff !important;
+}
+
+body {
+  background-color: #f4f7fb;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+  margin-top: 40px;
+}
+
+#ecg-graph,
+#heatmap-graph {
+  width: 100%;
+  height: 500px;
+  border: 2px solid #002b5c;
+  border-radius: 10px;
+  background-color: white;
+}
+
+/* Upload button modernized */
+.btn-custom {
+  background: linear-gradient(90deg, #003366, #0059b3);
+  color: white;
+  border: none;
+  font-size: 17px;
+  font-weight: 600;
+  padding: 12px 35px;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.btn-custom:hover {
+  background: linear-gradient(90deg, #0059b3, #003366);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 102, 204, 0.4);
+}
+
+/* Time Scale Slider */
+#timeScale {
+  -webkit-appearance: none;
+  width: 300px;
+  height: 10px;
+  background: linear-gradient(90deg, #80c6ff, #0066cc);
+  border-radius: 10px;
+  outline: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+#timeScale::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #004080;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s, background 0.3s;
+}
+
+#timeScale::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+  background: #0074cc;
+}
+
+/* Button container */
+.button-container {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  margin: 25px 0;
+}
+
+/* Circular Pause/Resume Buttons */
+.circle-btn {
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  border: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.btn-danger.circle-btn {
+  background: linear-gradient(145deg, #c70000, #ff3333);
+}
+
+.btn-success.circle-btn {
+  background: linear-gradient(145deg, #009933, #00cc44);
+}
+
+.btn-danger.circle-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+}
+
+.btn-success.circle-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+}
+#downsampleHzRange {
+  -webkit-appearance: none;
+  width: 300px;
+  height: 10px;
+  background: linear-gradient(90deg, #80c6ff, #0066cc);
+  border-radius: 10px;
+  outline: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+#downsampleHzRange::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #004080;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s, background 0.3s;
+}
+
+#downsampleHzRange::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+  background: #0074cc;
+}
+
+/* Firefox support */
+#downsampleHzRange::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #004080;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s, background 0.3s;
+}
+.btn-reset {
+  background: linear-gradient(90deg, #808080, #a6a6a6); /* gray gradient */
+  color: white;
+  border: none;
+  font-size: 17px;
+  font-weight: 600;
+  padding: 12px 25px;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.btn-reset:hover {
+  background: linear-gradient(90deg, #a6a6a6, #808080);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+  color: white;
+}

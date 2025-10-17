@@ -1,0 +1,31 @@
+{% load static %}
+<!-- CARDS -->
+<div class="bottom-half" id="button-section">
+  <h2 class="mb-4">Select an Option</h2>
+  <div class="button-grid">
+    <a href="{% url 'ecg' %}" class="square-btn">
+      <img src="{% static 'pics/icons8-ecg-64.png' %}" alt="ECG" />
+      <p>ECG Analysis</p>
+    </a>
+    <a href="{% url 'eeg' %}" class="square-btn">
+      <img src="{% static 'pics/icons8-brain-64.png' %}" alt="EEG" />
+      <p>EEG Signals</p>
+    </a>
+    <a href="{% url 'sar' %}" class="square-btn">
+      <img src="{% static 'pics/icons8-satellite-50.png' %}" alt="SAR" />
+      <p>SAR Images</p>
+    </a>
+    <a href="{% url 'doppler' %}" class="square-btn">
+      <img src="{% static 'pics/icons8-siren-64.png' %}" alt="Doppler" />
+      <p>Doppler Sounds</p>
+    </a>
+    <a href="{% url 'drones' %}" class="square-btn">
+      <img src="{% static 'pics/icons8-drone-50.png' %}" alt="Drones" />
+      <p>Drones</p>
+    </a>
+    <a href="{% url 'audio_sampling' %}" class="square-btn">
+      <img src="{% static 'pics/icons8-speak-50.png' %}" alt="audio" />
+      <p>Audio Sampling</p>
+    </a>
+  </div>
+</div>

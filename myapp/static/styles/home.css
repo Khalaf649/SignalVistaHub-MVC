@@ -1,0 +1,198 @@
+body,
+html {
+  height: 100%;
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  scroll-behavior: smooth;
+}
+
+/* Top Section */
+.top-half {
+  height: 50vh;
+  background: linear-gradient(to bottom, #002b5c 0%, #004080 100%);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+}
+
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.gradient-text {
+  font-size: 3rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #00bfff, #004080, #00bfff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: gradientMove 5s linear infinite;
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0%;
+  }
+  100% {
+    background-position: 200%;
+  }
+}
+
+.top-half .lead {
+  font-size: 1.2rem;
+  margin-top: 15px;
+}
+
+.btn-primary:hover {
+  background-color: #00bfff;
+  border-color: #00bfff;
+}
+
+/* Button Grid */
+.bottom-half {
+  min-height: 50vh;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.button-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-bottom: 50px;
+}
+
+.square-btn {
+  width: 200px;
+  height: 200px;
+  background-color: #e0f0ff;
+  border-radius: 20px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  text-align: center;
+  text-decoration: none;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+}
+
+.square-btn:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 8px 20px rgba(0, 123, 255, 0.5);
+}
+
+.square-btn img {
+  width: 75px;
+  height: 75px;
+  object-fit: contain;
+  margin-bottom: 12px;
+}
+
+.square-btn p {
+  font-size: 16px;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Card Rows */
+.card-row {
+  min-height: 20vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start; /* left align */
+  text-align: left; /* left align */
+  padding: 60px 15%;
+  transition: all 0.8s ease-out;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.card-row.navy {
+  background: linear-gradient(135deg, #002b5c, #004080);
+  color: white;
+  background-size: 200% auto;
+  animation: rowGradient 8s linear infinite alternate;
+}
+
+@keyframes rowGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+.card-row.white {
+  background-color: white;
+  color: #333;
+}
+
+.card-row h2 {
+  font-weight: 700;
+  margin-bottom: 20px;
+  font-size: 2.5rem;
+  background: linear-gradient(90deg, #00bfff, #004080, #00bfff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: gradientMove 5s linear infinite;
+}
+
+.card-row p {
+  font-size: 1.2rem;
+  max-width: 800px;
+}
+
+.card-row.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+footer {
+  background-color: white;
+  width: 100%;
+  text-align: center;
+  padding: 15px;
+  border-top: 1px solid #ddd;
+  font-size: 14px;
+  color: #777;
+}
+.gradient-text {
+  font-size: 5rem; /* Increased from 3rem */
+  font-weight: 700;
+  background: linear-gradient(90deg, #00bfff, #004080, #00bfff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: gradientMove 5s linear infinite;
+}

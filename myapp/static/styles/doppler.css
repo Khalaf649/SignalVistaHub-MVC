@@ -1,0 +1,129 @@
+/* Navbar */
+.navbar-custom {
+  height: 100px;
+  background: linear-gradient(90deg, #002b5c, #004080, #002b5c);
+  background-size: 200% auto;
+  animation: navbarGradient 6s linear infinite;
+  transition: all 0.3s ease;
+}
+
+@keyframes navbarGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.navbar-custom .navbar-brand,
+.navbar-custom .nav-link {
+  color: white !important;
+  font-weight: 500;
+  font-size: 25px;
+  transition: color 0.3s ease;
+}
+
+.navbar-custom .nav-link:hover {
+  color: #66b2ff !important;
+}
+
+body {
+  background-color: #f4f7fb;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+  margin-top: 40px;
+}
+
+h2 {
+  color: #002b5c;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+p {
+  color: #555;
+  font-size: 16px;
+}
+
+/* Modern buttons */
+.btn-custom {
+  background: linear-gradient(90deg, #003366, #0059b3);
+  color: white;
+  border: none;
+  font-size: 17px;
+  font-weight: 600;
+  padding: 12px 35px;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+.btn-custom:hover {
+  background: linear-gradient(90deg, #0059b3, #003366);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 102, 204, 0.4);
+  color: white;
+}
+
+input[type="number"] {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 150px;
+  margin-right: 15px;
+}
+
+label {
+  color: #333;
+  font-weight: 500;
+  margin-right: 8px;
+}
+
+.input-group-custom {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.button-container {
+  margin-top: 15px;
+  margin-bottom: 30px;
+}
+
+audio {
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+canvas {
+  border: 2px solid #002b5c;
+  border-radius: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background: white;
+}
+
+#results {
+  background: white;
+  border: 2px solid #002b5c;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+  color: #333;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+#results strong {
+  color: #002b5c;
+}
