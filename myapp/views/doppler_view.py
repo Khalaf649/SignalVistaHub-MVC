@@ -73,7 +73,8 @@ def simulate_doppler(request):
             "frequency": f_o.tolist(),
             "max_frequency": max_freq,
             "min_frequency": min_freq,
-            "shift_ratio": shift_ratio
+            "shift_ratio": shift_ratio,
+            "fs":fs
         })
 
     except Exception as e:

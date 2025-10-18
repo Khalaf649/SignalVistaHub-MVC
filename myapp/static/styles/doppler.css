@@ -127,3 +127,24 @@ canvas {
 #results strong {
   color: #002b5c;
 }
+.input-group-custom {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.input-group-custom > div {
+  flex: 1;
+  min-width: 150px;
+}
+
+.form-range {
+  flex: 1;
+}
+
+.badge {
+  font-size: 0.9rem;
+  min-width: 80px;
+}

@@ -152,3 +152,66 @@ input[type="file"]::file-selector-button:hover {
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
+#analysisResults {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+  border-left: 4px solid #007bff;
+}
+
+.button-container {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-warning {
+  background-color: #ffc107;
+  color: black;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.form-range {
+  margin: 10px 0;
+}
+
+#loading {
+  display: none;
+  text-align: center;
+  font-size: 18px;
+  margin: 20px 0;
+}
+
+#result {
+  display: none;
+  background-color: #e9f7ef;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 20px;
+  border-left: 4px solid #28a745;
+}
+
+#resampleStatus {
+  margin-top: 5px;
+  font-style: italic;
+}

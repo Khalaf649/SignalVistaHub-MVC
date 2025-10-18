@@ -21,7 +21,8 @@
         <h2>Drone Audio Detection</h2>
         <p>Upload an audio file to analyze and detect drone sounds.</p>
 
-        <form id="droneForm">
+        <!-- File Upload Form -->
+        <div class="mb-4">
           <input
             type="file"
             id="audioFile"
@@ -29,15 +30,66 @@
             accept="audio/*"
             required
           />
-          <div class="button-container">
-            <button type="submit" class="btn btn-custom">Analyze</button>
+          <div class="button-container mt-2">
+            <button id="analyzeBtn" class="btn btn-primary">
+              Analyze Audio
+            </button>
           </div>
-        </form>
+        </div>
 
-        <div id="loading">⏳ Analyzing audio... Please wait.</div>
+        <!-- Analysis Results Section -->
+        <div id="analysisResults" style="display: none">
+          <h4>Audio Analysis</h4>
+          <p><b>Original Sample Rate:</b> <span id="originalSr"></span> Hz</p>
+          <p><b>Nyquist Frequency:</b> <span id="nyquistFreq"></span> Hz</p>
+          <p><b>Maximum Frequency:</b> <span id="fmax"></span> Hz</p>
 
+          <!-- Resample Slider Section -->
+          <div class="mt-4">
+            <h5>Resample Audio</h5>
+            <label for="resampleSlider" class="form-label">
+              New Sample Rate: <span id="resampleValue"></span> Hz
+            </label>
+            <input
+              type="range"
+              class="form-range"
+              id="resampleSlider"
+              min="0"
+              max="100"
+              step="1000"
+            />
+            <div class="button-container mt-2">
+              <button type="button" id="resampleBtn" class="btn btn-warning">
+                Resample Audio
+              </button>
+
+              <div class="mt-3">
+                <audio
+                  id="resampledAudioPlayer"
+                  controls
+                  style="display: none"
+                ></audio>
+              </div>
+            </div>
+            <small id="resampleStatus" class="form-text"></small>
+          </div>
+
+          <!-- Classification Section -->
+          <div class="mt-4">
+            <h5>Classification</h5>
+            <div class="button-container">
+              <button id="classifyBtn" class="btn btn-success">
+                Classify Audio
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div id="loading">⏳ Processing... Please wait.</div>
+
+        <!-- Classification Results -->
         <div id="result">
-          <h3>Result:</h3>
+          <h3>Classification Result:</h3>
           <p><b>Classification:</b> <span id="classification"></span></p>
           <p><b>Confidence:</b> <span id="confidence"></span></p>
         </div>

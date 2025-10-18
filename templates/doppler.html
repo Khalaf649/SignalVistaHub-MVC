@@ -39,6 +39,28 @@
         </div>
       </div>
 
+      <!-- New Sampling Frequency Slider -->
+      <div class="input-group-custom mt-3">
+        <div class="w-100">
+          <label for="samplingRate">Sampling Frequency (Hz):</label>
+          <div class="d-flex align-items-center">
+            <input
+              type="range"
+              class="form-range me-3"
+              id="samplingRate"
+              min="4000"
+              max="48000"
+              step="1000"
+              value="8000"
+            />
+            <span id="samplingRateValue" class="badge bg-primary">8000 Hz</span>
+          </div>
+          <small class="text-muted"
+            >Adjust audio quality (4000 Hz - 48000 Hz)</small
+          >
+        </div>
+      </div>
+
       <div class="button-container">
         <button id="simulateBtn" class="btn btn-custom">Simulate</button>
       </div>
