@@ -6,7 +6,12 @@ const samplingSlider = document.getElementById("samplingSlider");
 const sliderValue = document.getElementById("sliderValue");
 const audioPlayer = document.getElementById("audioPlayer");
 const loader = document.getElementById("loader");
-
+const predictAudioInput = document.getElementById("predictAudio");
+const predictLoader = document.getElementById("predictLoader");
+const predictionResults = document.getElementById("predictionResults");
+const predictedGender = document.getElementById("predictedGender");
+const confidenceLevel = document.getElementById("confidenceLevel");
+const processedAudioPlayer = document.getElementById("processedAudioPlayer");
 let nyquistFreq = 0;
 
 function showError(message) {
@@ -23,6 +28,7 @@ function showSuccess(message) {
 
 async function analyzeAudio() {
   const file = audioFileInput.files[0];
+  console.log(file);
   if (!file) {
     showError("Please select an audio file");
     return;
@@ -104,11 +110,48 @@ async function resampleAudio() {
     });
 
     const data = await response.json();
-
     audioPlayer.src = data.audio_data;
-    console.log("Audio loaded:", data.audio_data.substring(0, 50));
   } catch (error) {
     showError("Error: " + error.message);
+  }
+}
+async function predictAudio() {
+  const file = predictAudioInput.files[0];
+  if (!file) {
+    showError("Please upload an audio file for prediction");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("audio", file);
+
+  predictLoader.style.display = "block";
+  predictionResults.classList.add("hidden");
+
+  try {
+    // 🧠 Placeholder endpoint — replace later with your real one
+    const response = await fetch("http://127.0.0.1:8000/predict/", {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await response.json();
+    console.log("Prediction Response:", data);
+
+    if (data.success) {
+      predictedGender.textContent = data.label || "Unknown";
+      confidenceLevel.textContent = data.confidence || "0";
+      processedAudioPlayer.src = data.audio_data || "";
+
+      predictionResults.classList.remove("hidden");
+      showSuccess("Prediction successful!");
+    } else {
+      showError("Error: " + (data.error || "Prediction failed"));
+    }
+  } catch (error) {
+    showError("Error predicting audio: " + error.message);
+  } finally {
+    predictLoader.style.display = "none";
   }
 }
 

@@ -45,5 +45,6 @@ path('drones/analyze/',drones_view.drone_upload,name='drone_upload'),
 
     path('analyze/', audio_sampling_view.analyze_audio, name='analyze_audio'),
     path('resample/', audio_sampling_view.resample_audio, name='resample_audio'),
+    path('predict/', audio_sampling_view.predict_audio, name='predict_audio'),
 
 ]

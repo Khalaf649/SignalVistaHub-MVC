@@ -97,6 +97,61 @@
           </div>
         </div>
       </div>
+      <!-- Prediction Section -->
+      <div class="mt-5">
+        <h3 class="text-center">
+          Voice Gender Prediction (with Anti-Aliasing)
+        </h3>
+        <div
+          style="
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          "
+        >
+          <label
+            for="predictAudio"
+            style="
+              font-weight: 600;
+              color: #002b5c;
+              font-size: 16px;
+              margin-bottom: 12px;
+              display: block;
+            "
+            >Upload Audio for Prediction</label
+          >
+          <input type="file" id="predictAudio" accept="audio/*" required />
+
+          <div class="button-container mt-3">
+            <button onclick="predictAudio()" class="btn btn-primary w-100">
+              Predict Gender
+            </button>
+          </div>
+        </div>
+
+        <div class="loader" id="predictLoader">
+          <div class="spinner"></div>
+        </div>
+
+        <div id="predictionResults" class="hidden mt-4">
+          <div class="info-box">
+            <div class="info-item">
+              <span class="info-label">Predicted Gender:</span>
+              <span class="value" id="predictedGender">-</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Confidence:</span>
+              <span class="value" id="confidenceLevel">-</span> %
+            </div>
+          </div>
+
+          <div class="audio-player mt-3">
+            <label>Anti-Aliased Audio Preview</label>
+            <audio id="processedAudioPlayer" controls></audio>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Bootstrap JS -->

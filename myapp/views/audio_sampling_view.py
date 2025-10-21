@@ -10,6 +10,15 @@ import librosa
 import io
 import base64
 import traceback
+import io
+import base64
+import numpy as np
+import librosa
+import soundfile as sf
+import tensorflow as tf
+from transformers import pipeline
+from django.http import JsonResponse
+
 
 
 
@@ -54,7 +63,115 @@ def analyze_audio(request):
         traceback.print_exc()
         return JsonResponse({'success': False, 'error': str(e)}, status=400)
 
+ANTI_ALIAS_MODEL_PATH = "anti_alias_model.h5"
 
+try:
+    aa_model = tf.keras.models.load_model(ANTI_ALIAS_MODEL_PATH, compile=False)
+    MODEL_LOADED = True
+    print("✅ Anti-aliasing model loaded successfully!")
+except Exception as e:
+    print(f"⚠ Could not load anti-aliasing model: {e}")
+    MODEL_LOADED = False
+    aa_model = None
+
+# Load Hugging Face Gender Classifier
+try:
+    classifier = pipeline("audio-classification", model="prithivMLmods/Common-Voice-Gender-Detection")
+    print("✅ Gender classifier loaded successfully!")
+except Exception as e:
+    print(f"⚠ Could not load gender classifier: {e}")
+    classifier = None
+
+
+# -------------------------------
+# Helper: Apply Anti-Aliasing
+# -------------------------------
+def apply_model_reconstruction(y_input, sr_input):
+    if not MODEL_LOADED:
+        print("⚠ Model not available, performing standard upsampling.")
+        return librosa.resample(y_input, orig_sr=sr_input, target_sr=16000)
+
+    try:
+        model_sr = 16000
+        model_len = 48000
+        y_upsampled = librosa.resample(y_input, orig_sr=sr_input, target_sr=model_sr)
+
+        reconstructed_chunks = []
+        for i in range(0, len(y_upsampled), model_len):
+            chunk = y_upsampled[i:i + model_len]
+            len_chunk = len(chunk)
+            if len_chunk < model_len:
+                chunk = np.pad(chunk, (0, model_len - len_chunk), mode='constant')
+
+            model_input = chunk[np.newaxis, ..., np.newaxis]
+            pred_chunk = np.squeeze(aa_model.predict(model_input, verbose=0))
+            if len_chunk < model_len:
+                pred_chunk = pred_chunk[:len_chunk]
+            reconstructed_chunks.append(pred_chunk)
+
+        y_reconstructed = np.concatenate(reconstructed_chunks)
+        return y_reconstructed
+    except Exception as e:
+        print(f"❌ Error during reconstruction: {e}")
+        return librosa.resample(y_input, orig_sr=sr_input, target_sr=16000)
+
+
+# -------------------------------
+# Django Endpoint
+# -------------------------------
+@require_http_methods(["POST"])
+def predict_audio(request):
+    """
+    POST endpoint that:
+    - takes an uploaded audio file,
+    - applies anti-aliasing,
+    - classifies gender,
+    - returns base64 of reconstructed audio + prediction result.
+    """
+    if request.method != "POST":
+        return JsonResponse({"success": False, "error": "Only POST requests allowed."})
+
+    if "audio" not in request.FILES:
+        return JsonResponse({"success": False, "error": "No audio file uploaded."})
+
+    try:
+        # Load uploaded audio
+        audio_file = request.FILES["audio"]
+        y, sr = librosa.load(audio_file, sr=None)
+        print(f"Loaded audio with SR={sr}, length={len(y)/sr:.2f}s")
+
+        # Apply anti-aliasing
+        y_reconstructed = apply_model_reconstruction(y, sr)
+
+        # Save to memory buffer as WAV
+        buffer = io.BytesIO()
+        sf.write(buffer, y_reconstructed, 16000, format="WAV")
+        buffer.seek(0)
+
+        # Classify reconstructed audio
+        if classifier:
+            # Hugging Face pipeline works directly with np.ndarray or file-like
+            results = classifier({"array": y_reconstructed, "sampling_rate": 16000})
+            top = results[0]
+            label = top["label"]
+            score = round(top["score"], 3)
+        else:
+            label, score = "unknown", 0.0
+
+        # Encode audio as base64 for frontend playback
+        buffer.seek(0)
+        audio_base64 = base64.b64encode(buffer.read()).decode("utf-8")
+        audio_data_uri = f"data:audio/wav;base64,{audio_base64}"
+
+        return JsonResponse({
+            "success": True,
+            "label": label,
+            "confidence": score,
+            "audio_data": audio_data_uri
+        })
+
+    except Exception as e:
+        return JsonResponse({"success": False, "error": str(e)})
 
 @require_http_methods(["POST"])
 def resample_audio(request):
