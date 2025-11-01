@@ -55,13 +55,13 @@ It includes major analysis modules for ECG, EEG, Audio Sampling, Doppler, Drone,
 
 **Features**
 
-| **Feature**                                 | **Description**                                                                                                                                                                                                                                    | **Illustration**                                 |
-| ------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| **Multi-Channel Plotting (Linear & Polar)** | Enables synchronized visualization of ECG signals across multiple leads. Data can be observed in both **linear** (time-domain) and **polar** (phase-space) formats, providing complementary insights into waveform morphology and synchronization. | ![ECG Plot](./assets/ecg_plot.jpeg)              |
-| **AI-Powered ECG Analysis**                 | Utilizes trained machine learning models to automatically identify and classify potential cardiac abnormalities based on the uploaded ECG data. _(Model files are excluded from version control — see `.gitignore`.)_                              | ![AI ECG Analysis](./assets/ecg_ai_analysis.png) |
-| **Recurrence Plot (Two-Channel Analysis)**  | Computes and visualizes **recurrence relationships** between two ECG leads, aiding in the detection of nonlinear patterns, rhythmic structures, and cross-channel dependencies.                                                                    | ![Recurrence Plot](./assets/ecg_recurrence.jpeg) |
-| **XOR Channel Analysis**                    | Performs a **logical XOR** operation between selected ECG channels to highlight waveform discrepancies, phase shifts, or artifacts across different signal paths.                                                                                  | ![XOR Plot](./assets/ecg_xor.jpeg)               |
-| **Downsampling**                            | Reduces ECG sampling rate to enhance processing speed and simplify visualization without losing essential waveform features.                                                                                | *(Image placeholder)*                            |
+| **Feature**                                 | **Description**                                                                                                                                                                                                                                      | **Preview**                                      |
+|---------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------|
+| **Multi-Channel Linear Plotting**           | Enables synchronized visualization of ECG signals across multiple leads in the **time domain**, allowing detailed analysis of waveform amplitude, duration, and rhythm consistency across channels.                                                   | ![ECG Linear Plot](./assets/multi-linear-ecg.png) |
+| **Multi-Channel Polar Plotting**            | Visualizes ECG signals in a **polar (phase-space)** representation, highlighting phase relationships, waveform morphology, and inter-lead synchronization patterns.                                            | ![ECG Polar Plot](./assets/mutli-polar-ecg.png)   |
+| **Recurrence Plot (Two-Channel Analysis)**  | Computes and visualizes **recurrence relationships** between two ECG leads, aiding in the detection of nonlinear patterns, rhythmic structures, and cross-channel dependencies.                               | ![Recurrence Plot](./assets/heat-map-ecg.png)     |
+| **Downsampling**                            | Reduces ECG sampling rate to enhance processing speed and simplify visualization without losing essential waveform features.                                            | ![Downsampled ECG](./assets/downsampled-ecg.png)  |
+
 
 
 ---
@@ -72,12 +72,13 @@ It includes major analysis modules for ECG, EEG, Audio Sampling, Doppler, Drone,
 - `signals`: 2D signal matrix _(shape: n_samples × n_channels)_
 
 **Features**
+| **Feature**                   | **Description**                                                                                     | **Image**                                         |
+| ------------------------------ | --------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| **Multi-channel Linear Plotting** | Simultaneous EEG waveform visualization across multiple channels in the **time domain**, enabling detailed observation of amplitude, phase, and synchronization. | ![EEG Linear Plot](./assets/mutli-linear-eeg.png) |
+| **Multi-channel Polar Plotting**  | Displays EEG signals in a **polar (phase-space)** view, revealing cyclic or phase-locked dynamics between channels. | ![EEG Polar Plot](./assets/mutli-polar-eeg.png)   |
+| **Recurrence Plot (2 Ch)**       | Analyzes **dynamic recurrence relationships** between two EEG channels, aiding in the detection of periodic or chaotic structures. | ![EEG Recurrence Plot](./assets/heat-map-eeg.png) |
+| **Downsampling**                 | Reduces EEG signal resolution to focus on main frequency bands and smooth noisy data.              | ![Downsampled EEG](./assets/dowmsampled-eeg.png)  |
 
-| **Feature**                | **Description**                                                                 | **Image**                                     |
-| --------------------------- | ------------------------------------------------------------------------------- | --------------------------------------------- |
-| **Multi-channel Plotting**  | Simultaneous EEG waveform visualization                                        | ![EEG Plot](./assets/eeg_plot.jpeg)          |
-| **Recurrence Plot (2 Ch)**  | Analyze dynamic recurrence between EEG channels                                | ![EEG Recurrence Plot](./assets/eeg_recurrence.jpeg) |
-| **Downsampling**            | Reduces EEG signal resolution to focus on main frequency bands and smooth noisy data. | *(Image placeholder)*                         |
 
 
 ---
@@ -91,9 +92,9 @@ It includes major analysis modules for ECG, EEG, Audio Sampling, Doppler, Drone,
 
 | **Feature** | **Description** | **Image** |
 | ------------ | ---------------- | ---------- |
-| **Audio Signal Visualization (Before Anti-Aliasing)** | Displays the raw waveform sampled from the input voice signal. | *(Image placeholder)* |
-| **Gender Classification (AI Model)** | Identifies gender (Male/Female) using trained neural network models. | *(Image placeholder)* |
-| **Audio Signal Visualization (After Anti-Aliasing)** | Shows the cleaned and filtered version of the signal after anti-aliasing. | *(Image placeholder)* |
+| **Audio Signal Visualization (Before Anti-Aliasing)** | Displays the raw waveform sampled from the input voice signal. | ![Audio Sampling Before Anti-Aliasing ](./assets/Safe-audio-Sampling.png)  |
+| **Gender Classification (AI Model)** | Identifies gender (Male/Female) using trained neural network models. | ![Gender Classification ](./assets/Gender-Classification.png) |
+| **Audio Signal Visualization (After Anti-Aliasing)** | Shows the cleaned and filtered version of the signal after anti-aliasing. | ![Audio Sampling After Anti-Aliasing ](./assets/Warn-Audio-Sampling.png) |
 
 
 ---
@@ -109,9 +110,7 @@ It includes major analysis modules for ECG, EEG, Audio Sampling, Doppler, Drone,
 
 | **Feature**                                | **Description**                                                                                            | **Image**                                                          |
 | ------------------------------------------ | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
-| **Amplitude & Frequency vs Time Plot**     | Visualize the simulated Doppler signal                                                                     | ![Amplitude & Frequency Time Plot](./assets/doppler_plot.jpeg)     |
-| **AI Doppler Prediction**                  | Predict source frequency & velocity from recorded Doppler signal _(Model excluded — see `.gitignore`)_     | ![AI Doppler Prediction](./assets/doppler_ai_prediction.jpeg)      |
-
+| **Amplitude & Frequency vs Time Plot**     | Visualize the simulated Doppler signal                                                                     | ![Amplitude & Frequency Time Plot](./assets/doppler.png)     |
 
 ---
 
@@ -124,7 +123,7 @@ It includes major analysis modules for ECG, EEG, Audio Sampling, Doppler, Drone,
 
 | **Feature**               | **Description**                                                                     | **Image**                                          |
 | -------------------------- | ----------------------------------------------------------------------------------- | -------------------------------------------------- |
-| **AI-Based Classification** | Identifies drone type using pre-trained models hosted on Hugging Face or locally | ![Drone Classification](./assets/drone_classification.jpeg) |
+| **AI-Based Classification** | Identifies drone type using pre-trained models hosted on Hugging Face or locally | ![Drone Classification](./assets/drone-classification.png) |
 
 
 ---
@@ -138,7 +137,7 @@ It includes major analysis modules for ECG, EEG, Audio Sampling, Doppler, Drone,
 
 | **Feature**                 | **Description**                                                                                   | **Image**                                     |
 | ---------------------------- | ----------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| **SAR Image Formation**      | Generates SAR images from raw radar echoes using range-Doppler or back-projection algorithms.   | ![SAR Formation](./assets/sar_formation.jpeg) |
+| **SAR Image Formation**      | Generates SAR images from raw radar echoes using range-Doppler or back-projection algorithms.   | ![SAR Formation](./assets/sar.png) |
 
 
 ---
@@ -174,7 +173,7 @@ The **server** manages:
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/Khalaf649/SignalVistaHub.git
+git clone https://github.com/Khalaf649/SignalVistaHub-MVC.git
 cd SignalVistaHub
 
 # 2. Install client dependencies
